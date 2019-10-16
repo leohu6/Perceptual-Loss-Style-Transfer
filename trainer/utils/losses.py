@@ -1,6 +1,17 @@
 import tensorflow as tf
 import utils
 
+
+style_layers = ['block1_conv2',
+                'block2_conv2',
+                'block3_conv3',
+                'block4_conv3']
+
+content_layers = ['block2_conv2']
+
+vgg16 = tf.keras.applications.VGG16(weights='imagenet', include_top=False)
+vgg16.trainable = False
+
 def style_loss(style_img):
     def loss(y_true, y_pred):
       vgg_out = vgg_layers(style_layers)

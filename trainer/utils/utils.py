@@ -11,3 +11,8 @@ def preprocess_vgg(inputs):
   VGG_MEAN = [103.939, 116.779, 123.68]
   bgr = tf.concat(values=[b - VGG_MEAN[0], g - VGG_MEAN[1], r - VGG_MEAN[2]], axis=3)
   return bgr
+
+def vgg_layers(layers):
+  outputs = [vgg16.get_layer(name).output for name in layers]
+  model = tf.keras.Model([vgg16.input], outputs=outputs)
+  return model
