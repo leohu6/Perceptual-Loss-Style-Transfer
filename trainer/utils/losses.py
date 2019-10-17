@@ -1,6 +1,7 @@
 import tensorflow as tf
-import utils
-
+from utils import preprocess_vgg
+from utils import gram_matrix
+from utils import vgg_layers
 
 style_layers = ['block1_conv2',
                 'block2_conv2',
@@ -31,7 +32,7 @@ def style_loss(style_img):
       return cum_loss
     return loss
 
-def content_loss(content_img):
+def content_loss_test(content_img):
     def loss(y_true,y_pred):
       vgg_out = vgg_layers(content_layers)
       content_img_processed = preprocess_vgg(content_img)
@@ -45,11 +46,25 @@ def content_loss(content_img):
       return new_l
     return loss
 
+def content_loss(y_true, y_pred):
+    vgg_out = vgg_layers(content_layers)
+    content_img_processed = preprocess_vgg(y_true)
+    content_out = vgg_out(content_img_processed)
+      
+    y_pred_processed = preprocess_vgg(y_pred)
+    predicted_out = vgg_out(y_pred_processed)
+
+    new_l = tf.keras.losses.MeanSquaredError()(predicted_out, content_out)
+    return new_l
+    
+def tv_loss(y_true, y_pred):
+    return tf.image.total_variation(y_pred)
+
 def full_loss(style_img):
     def loss(y_true,y_pred):
-      STYLE_WEIGHT = 2e0
+      STYLE_WEIGHT = 5e0
       CONTENT_WEIGHT = 1e0
-      TV_WEIGHT = 1e-4
+      TV_WEIGHT = 1e-3
     
       style_l = style_loss(style_img)(y_true, y_pred)
       content_l = content_loss(y_true)(y_true, y_pred)
