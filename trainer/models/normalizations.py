@@ -20,10 +20,10 @@ from __future__ import print_function
 
 import logging
 import tensorflow as tf
-from tensorflow_addons.utils import keras_utils
+# from tensorflow_addons.utils import keras_utils
 
 
-@keras_utils.register_keras_custom_object
+# @keras_utils.register_keras_custom_object
 class GroupNormalization(tf.keras.layers.Layer):
     """Group normalization layer.
     Group Normalization divides the channels into groups and computes
@@ -267,7 +267,7 @@ class GroupNormalization(tf.keras.layers.Layer):
         return broadcast_shape
 
 
-@keras_utils.register_keras_custom_object
+# @keras_utils.register_keras_custom_object
 class InstanceNormalization(GroupNormalization):
     """Instance normalization layer.
     Instance Normalization is an specific case of ```GroupNormalization```since

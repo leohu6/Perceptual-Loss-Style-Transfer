@@ -1,5 +1,15 @@
 import tensorflow as tf
 
+style_layers = ['block1_conv2',
+                'block2_conv2',
+                'block3_conv3',
+                'block4_conv3']
+
+content_layers = ['block2_conv2']
+
+vgg16 = tf.keras.applications.VGG16(weights='imagenet', include_top=False)
+vgg16.trainable = False
+
 def gram_matrix(input_tensor):
   result = tf.linalg.einsum('bijc,bijd->bcd', input_tensor, input_tensor)
   input_shape = tf.shape(input_tensor)
