@@ -62,7 +62,7 @@ def tv_loss(y_true, y_pred):
 
 def full_loss(style_img):
     def loss(y_true,y_pred):
-      STYLE_WEIGHT = 10
+      STYLE_WEIGHT = 5
       CONTENT_WEIGHT = 1e0
       TV_WEIGHT = 1e-4
     

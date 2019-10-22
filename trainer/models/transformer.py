@@ -65,8 +65,8 @@ def upsample_conv(input_tensor, kernel_size, filters, stride):
   x = tf.keras.layers.Activation(tf.nn.relu)(x)
   return x
 
-def transformer_model():
-    inputs = tf.keras.layers.Input(shape=(None, None, 3))
+def transformer_model(input_dim=3, output_dim=3):
+    inputs = tf.keras.layers.Input(shape=(None, None, input_dim))
     print('created')
     x = conv_w_reflection(inputs, 9, 32, 1)
     x = conv_w_reflection(x, 3, 64, 2)
@@ -78,6 +78,6 @@ def transformer_model():
     x = residual_block(x, 128)
     x = upsample_conv(x, 3, 64, 2)
     x = upsample_conv(x, 3, 32, 2)
-    x = tf.keras.layers.Conv2DTranspose(3, kernel_size=9, strides=1, padding='same', activation='tanh')(x)
+    x = tf.keras.layers.Conv2DTranspose(output_dim, kernel_size=9, strides=1, padding='same', activation='tanh')(x)
     x = tf.keras.layers.Lambda(lambda x: tf.math.scalar_mul(255./2, x) + 255./2)(x)
     return tf.keras.Model(inputs=inputs, outputs=x)

@@ -1,4 +1,5 @@
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 style_layers = ['block1_conv2',
                 'block2_conv2',
@@ -26,3 +27,19 @@ def vgg_layers(layers):
   outputs = [vgg16.get_layer(name).output for name in layers]
   model = tf.keras.Model([vgg16.input], outputs=outputs)
   return model
+
+def load_img(path_to_img):
+  max_dim = 2048
+  img = tf.io.read_file(path_to_img)
+  img = tf.image.decode_image(img, channels=3)
+  img = tf.image.convert_image_dtype(img, tf.uint8)
+  img = img[tf.newaxis, :]
+  img = tf.cast(img, tf.float32)
+  return img
+
+def imshow(image, title=None):
+  if len(image.shape) > 3:
+    image = tf.squeeze(image, axis=0)
+  plt.imshow(image)
+  if title:
+    plt.title(title)
