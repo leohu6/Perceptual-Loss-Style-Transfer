@@ -43,3 +43,36 @@ def imshow(image, title=None):
   plt.imshow(image)
   if title:
     plt.title(title)
+
+def scan_convert(image, irad, frad, iang, fang):
+  """Scan converts beam lines"""
+  image, _ = polarTransform.convertToCartesianImage(
+      np.transpose(image),
+      initialRadius=irad,
+      finalRadius=frad,
+      initialAngle=iang,
+      finalAngle=fang,
+      hasColor=False,
+      order=1)
+  return np.transpose(image[:, int(irad):])
+  
+def process(ele):
+  """Cuts to -80 dB and normalizes images from 0 to 1"""
+  ele['das'] = tf.reshape(ele['das']['dB'], [ele['height'], ele['width']])
+  ele['das'] = tf.clip_by_value(ele['das'], -80, 0)
+  ele['das'] = (ele['das'] - tf.reduce_min(ele['das']))/(tf.reduce_max(ele['das']) - tf.reduce_min(ele['das']))
+
+  ele['dtce'] = tf.reshape(ele['dtce'], [ele['height'], ele['width']])
+  ele['dtce'] = (ele['dtce'] - tf.reduce_min(ele['dtce']))/(tf.reduce_max(ele['dtce']) - tf.reduce_min(ele['dtce']))
+  image = tf.image.resize(ele['das'][..., None], [512, 512])
+  image = tf.image.grayscale_to_rgb(image)
+  print(image.shape)
+  return image, image
+
+def just_das(ele):
+  converted = scan_convert(ele['das'].numpy(),
+                           ele['initial_radius'].numpy(),
+                           ele['final_radius'].numpy(),
+                           ele['initial_angle'].numpy(),
+                           ele['final_angle'].numpy())
+  return converted, converted
