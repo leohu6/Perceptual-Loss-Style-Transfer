@@ -9,18 +9,17 @@ In this repository we provide three notebook files to perform the following:
 
 ### Example outputs
 #### Input image
-<img src="images/input/chicago.jpg" width="256">
+<img src="images/input/chicago.jpg" width="512">
 
 #### Styles
-<img src="images/styles/starry_night_crop.jpg" width="256">
-<img src="images/styles/udnie.jpg" width="256">
-
-<img src="images/styles/feathers.jpg" width="256">
-<img src="images/styles/the_scream.jpg" width="256">
+<img src="images/styles/starry_night_crop.jpg" height="256">
+<img src="images/styles/udnie.jpg" height="256">
+<img src="images/styles/feathers.jpg" height="256">
+<img src="images/styles/the_scream.jpg" height="256">
 
 #### Outputs
-![chicago_starry](images/outputs/chicago_starry.jpg)
-![chicago_udnie](images/outputs/chicago_udnie.jpg)
-![chicago_feathers](images/outputs/chicago_feathers.jpg)
-![chicago_scream](images/outputs/chicago_scream.jpg)
-![duke](images/outputs/chapel_udnie.jpg)
+<img src="images/outputs/chicago_starry.jpg" width="1024">
+<img src="images/outputs/chicago_udnie.jpg" width="1024">
+<img src="images/outputs/chicago_feathers.jpg" width="1024">
+<img src="images/outputs/chicago_scream.jpg" width="1024">
+<img src="images/outputs/chapel_udnie.jpg" width="1024">
