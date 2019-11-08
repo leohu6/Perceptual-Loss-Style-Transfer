@@ -1,4 +1,5 @@
 # BME590-Perceptual-Loss-Style-Transfer
+By Leo Hu and Chris Zhou
 
 This code implements style transfer from the paper **[Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155)** using Tensorflow 2.0 and Keras.
 
